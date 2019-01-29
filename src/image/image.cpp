@@ -40,8 +40,10 @@ LwipImage::~LwipImage() {
 
 Handle<Value> LwipImage::NewInstance() {
     Nan::EscapableHandleScope scope;
+    Isolate *isolate = Isolate::GetCurrent();
+    Local<Context> context = isolate->GetCurrentContext();
     Local<FunctionTemplate> constructorHandle = Nan::New<FunctionTemplate>(constructor);
-    Local<Object> instance = constructorHandle->GetFunction()->NewInstance();
+    Local<Object> instance = constructorHandle->GetFunction()->NewInstance(context).ToLocalChecked();;
     return scope.Escape(instance);
 }
 
